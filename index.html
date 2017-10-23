@@ -1,0 +1,57 @@
+<html>
+	<head>	
+		<title>Json IMDB API Test</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+        
+		<link rel="stylesheet" href="stylesheet.css">
+	</head>
+	
+	<body>
+		<div>
+			<div>
+				<p>Movie Title</p>
+				<input placeholder="Titanic" id="movie_title" type="text">
+				<label id="errorDisplay"> </label>
+				
+			</div>
+			
+			<div>
+				<button class="waves-effect waves-light btn" id="submit">Search</button>
+			</div>
+		</div>
+		
+		<div>
+			<p class='movie-title'>The movie title is: </p>
+            <p class='movie-year'>Released on: </p>
+		</div>
+	</body>
+	
+	<script>
+		jQuery(document).ready(function () {
+	
+			$('#submit').on('click', function (event) {
+				console.log("ran");
+				var film = document.getElementById('movie_title').value
+
+				if (film != ""){
+					film = film.replace(/ /g, "+");
+		
+					$.ajax({
+						url: "http://www.omdbapi.com/?t=" + film + "&y=&plot=full&r=json"
+					}).then(function(data) {
+						if (data.Response == "True"){
+							console.log(data)
+							//$('.movie-title').append(data.Title);
+						} else {
+							Materialize.toast('I am a toast!', 5000, 'rounded');
+						}
+					});
+				}
+				
+			});
+		});
+	</script>
+	
+</html>
